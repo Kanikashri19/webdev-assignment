@@ -6,7 +6,7 @@ A cinematic, high-performance scroll-driven hero section animation inspired by t
 
 ## 🔗 Links
 
-- **Live Demo:** [Demo Link](webdev-assignment-taupe.vercel.app)
+- **Live Demo:** [Demo Link](https://webdev-assignment-taupe.vercel.app)
 - **GitHub Repository:** [https://github.com/Kanikashri19/car-scroll-animation](https://github.com/Kanikashri19/car-scroll-animation)
 - **Original Inspiration:** [https://paraschaturvedi.github.io/car-scroll-animation](https://paraschaturvedi.github.io/car-scroll-animation)
 
