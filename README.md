@@ -1,4 +1,4 @@
-# 🏎️ ITZFIZZ — Scroll-Driven Hero Section Animation
+# ITZFIZZ — Scroll-Driven Hero Section Animation
 
 A cinematic, high-performance scroll-driven hero section animation inspired by the [car-scroll-animation reference](https://paraschaturvedi.github.io/car-scroll-animation). Built with **React 18**, **Tailwind CSS**, and **GSAP ScrollTrigger**, featuring butter-smooth 60fps animations, letter-by-letter synchronized neon illumination, dynamic floating impact metric cards, real-time telemetry HUD, and synthetic Web Audio sound effects.
 
@@ -12,7 +12,7 @@ A cinematic, high-performance scroll-driven hero section animation inspired by t
 
 ---
 
-## 🚀 Key Features
+##  Key Features
 
 ### 1. Above-The-Fold Hero Section Layout
 - **Letter-Spaced Headline:** `W E L C O M E   I T Z F I Z Z` rendered across the centerfold highway track with subtle base styling above the fold.
@@ -48,7 +48,7 @@ A cinematic, high-performance scroll-driven hero section animation inspired by t
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 - **Framework:** React 18
 - **Animation Engine:** GSAP 3.12 (with ScrollTrigger plugin)
