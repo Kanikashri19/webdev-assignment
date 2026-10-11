@@ -7,40 +7,40 @@ export default function Navbar({ isAudioEnabled, toggleAudio, scrollProgress }) 
   }
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 px-4 md:px-8 py-4 backdrop-blur-md bg-black/40 border-b border-white/5 transition-all">
+    <header className="fixed top-0 left-0 right-0 z-50 px-4 md:px-8 py-3.5 backdrop-blur-md bg-white/85 border-b border-gray-200/80 shadow-sm transition-all">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Brand Logo */}
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#45db7d] to-[#def54f] flex items-center justify-center shadow-glow-green/50 shadow-md">
-            <Gauge className="w-5 h-5 text-black" />
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-sky-400 flex items-center justify-center shadow-md text-white">
+            <Gauge className="w-5 h-5 text-white" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-extrabold tracking-wider text-base md:text-lg text-white font-mono">
+              <span className="font-extrabold tracking-wider text-base md:text-lg text-gray-900 font-mono">
                 ITZFIZZ
               </span>
-              <span className="text-[10px] font-semibold uppercase tracking-widest px-2 py-0.5 rounded-full bg-[#45db7d]/20 text-[#45db7d] border border-[#45db7d]/30">
+              <span className="text-[10px] font-semibold uppercase tracking-widest px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 border border-blue-200">
                 PRO ENGINE
               </span>
             </div>
-            <p className="text-[11px] text-zinc-400 hidden sm:block">Scroll-Driven Hero Showcase</p>
+            <p className="text-[11px] text-gray-500 hidden sm:block">Scroll-Driven Hero Showcase</p>
           </div>
         </div>
 
         {/* Live Telemetry Pill */}
-        <div className="hidden lg:flex items-center gap-4 bg-zinc-900/80 border border-white/10 rounded-full px-4 py-1.5 text-xs font-mono text-zinc-300">
+        <div className="hidden lg:flex items-center gap-4 bg-gray-100/90 border border-gray-200 rounded-full px-4 py-1.5 text-xs font-mono text-gray-700">
           <div className="flex items-center gap-2">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#45db7d] opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#45db7d]"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-600 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-600"></span>
             </span>
-            <span className="text-zinc-400">GSAP PIN:</span>
-            <span className="text-[#45db7d] font-semibold">{Math.round(scrollProgress)}%</span>
+            <span className="text-gray-500">GSAP PIN:</span>
+            <span className="text-blue-600 font-bold">{Math.round(scrollProgress)}%</span>
           </div>
-          <div className="w-px h-3 bg-white/15" />
-          <div className="text-zinc-400">FPS: <span className="text-white">60.0</span></div>
-          <div className="w-px h-3 bg-white/15" />
-          <div className="text-zinc-400">TRACK: <span className="text-white">McLAREN 720S</span></div>
+          <div className="w-px h-3 bg-gray-300" />
+          <div className="text-gray-500">FPS: <span className="text-gray-900 font-semibold">60.0</span></div>
+          <div className="w-px h-3 bg-gray-300" />
+          <div className="text-gray-500">TRACK: <span className="text-gray-900 font-semibold">McLAREN 720S</span></div>
         </div>
 
         {/* Controls */}
@@ -50,21 +50,21 @@ export default function Navbar({ isAudioEnabled, toggleAudio, scrollProgress }) 
             onClick={toggleAudio}
             className={`p-2 md:px-3 md:py-1.5 rounded-lg text-xs font-medium flex items-center gap-2 transition-all border ${
               isAudioEnabled
-                ? 'bg-[#45db7d]/15 text-[#45db7d] border-[#45db7d]/40 shadow-glow-green/30'
-                : 'bg-zinc-900 text-zinc-400 border-white/10 hover:text-white hover:border-white/20'
+                ? 'bg-blue-50 text-blue-600 border-blue-300 shadow-sm'
+                : 'bg-gray-100 text-gray-600 border-gray-200 hover:text-gray-900 hover:bg-gray-200'
             }`}
             title="Toggle Engine Audio Synthesis"
           >
-            {isAudioEnabled ? <Volume2 className="w-4 h-4 animate-pulse" /> : <VolumeX className="w-4 h-4" />}
+            {isAudioEnabled ? <Volume2 className="w-4 h-4 animate-pulse text-blue-600" /> : <VolumeX className="w-4 h-4" />}
             <span className="hidden md:inline">{isAudioEnabled ? 'AUDIO ON' : 'SFX OFF'}</span>
           </button>
 
           {/* Scroll CTA Button */}
           <button
             onClick={scrollToDemo}
-            className="hidden sm:flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/15 border border-white/10 text-xs font-medium text-white transition-all"
+            className="hidden sm:flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-gray-100 hover:bg-gray-200 border border-gray-200 text-xs font-semibold text-gray-700 transition-all"
           >
-            <ArrowDown className="w-3.5 h-3.5 text-[#def54f]" />
+            <ArrowDown className="w-3.5 h-3.5 text-blue-600" />
             <span>Drive</span>
           </button>
 
@@ -73,7 +73,7 @@ export default function Navbar({ isAudioEnabled, toggleAudio, scrollProgress }) 
             href="https://github.com/Kanikashri19/car-scroll-animation"
             target="_blank"
             rel="noopener noreferrer"
-            className="p-2 md:px-3 md:py-1.5 rounded-lg bg-[#def54f] hover:bg-[#cde43f] text-black font-semibold text-xs flex items-center gap-1.5 transition-all shadow-glow-lime/30 shadow-sm"
+            className="p-2 md:px-3 md:py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs flex items-center gap-1.5 transition-all shadow-sm"
           >
             <Github className="w-4 h-4" />
             <span className="hidden sm:inline">Source Code</span>

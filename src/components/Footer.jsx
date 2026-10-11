@@ -1,5 +1,5 @@
 import React from 'react'
-import { ArrowUp, Github, ExternalLink, Heart } from 'lucide-react'
+import { ArrowUp, Github, ExternalLink } from 'lucide-react'
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -7,15 +7,15 @@ export default function Footer() {
   }
 
   return (
-    <footer className="bg-black text-zinc-400 border-t border-white/10 py-12 px-6 md:px-12 relative z-30 font-mono text-xs">
+    <footer className="bg-white text-gray-600 border-t border-gray-200 py-12 px-6 md:px-12 relative z-30 font-mono text-xs">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
         <div>
-          <div className="flex items-center gap-2 text-white font-bold text-sm mb-1">
+          <div className="flex items-center gap-2 text-gray-900 font-bold text-sm mb-1">
             <span>ITZFIZZ</span>
-            <span className="text-zinc-600">/</span>
-            <span className="text-[#45db7d]">FRONTEND ANIMATION SHOWCASE</span>
+            <span className="text-gray-400">/</span>
+            <span className="text-blue-600">FRONTEND ANIMATION SHOWCASE</span>
           </div>
-          <p className="text-zinc-500 text-[11px]">
+          <p className="text-gray-500 text-[11px]">
             Recreated with GSAP ScrollTrigger, React 18, and Tailwind CSS.
           </p>
         </div>
@@ -25,9 +25,9 @@ export default function Footer() {
             href="https://paraschaturvedi.github.io/car-scroll-animation"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-white flex items-center gap-1.5 transition-colors"
+            className="hover:text-blue-600 flex items-center gap-1.5 transition-colors"
           >
-            <ExternalLink className="w-3.5 h-3.5 text-[#def54f]" />
+            <ExternalLink className="w-3.5 h-3.5 text-blue-600" />
             <span>Original Reference</span>
           </a>
 
@@ -35,18 +35,18 @@ export default function Footer() {
             href="https://github.com/Kanikashri19/car-scroll-animation"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-white flex items-center gap-1.5 transition-colors"
+            className="hover:text-blue-600 flex items-center gap-1.5 transition-colors"
           >
-            <Github className="w-3.5 h-3.5 text-[#45db7d]" />
+            <Github className="w-3.5 h-3.5 text-gray-800" />
             <span>GitHub Repository</span>
           </a>
 
           <button
             onClick={scrollToTop}
-            className="p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-white/10 text-white transition-all hover:scale-105"
+            className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 border border-gray-200 text-gray-700 transition-all hover:scale-105"
             title="Scroll to Top"
           >
-            <ArrowUp className="w-4 h-4" />
+            <ArrowUp className="w-4 h-4 text-blue-600" />
           </button>
         </div>
       </div>

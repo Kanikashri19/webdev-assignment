@@ -13,7 +13,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#121212] text-white flex flex-col font-sans selection:bg-[#45db7d] selection:text-black">
+    <div className="min-h-screen bg-[#f8fafc] text-gray-900 flex flex-col font-sans selection:bg-blue-600 selection:text-white">
       {/* Top Floating Navbar */}
       <Navbar
         isAudioEnabled={isAudioEnabled}
@@ -29,7 +29,7 @@ export default function App() {
           onScrollProgressChange={setScrollProgress}
         />
 
-        {/* Feature Highlights & Engineering Specifications */}
+        {/* Feature Highlights Section */}
         <FeatureShowcase />
       </main>
 

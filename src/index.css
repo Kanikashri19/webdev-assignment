@@ -9,47 +9,47 @@
   }
 
   body {
-    background-color: #121212;
-    color: #ffffff;
+    background-color: #f8fafc;
+    color: #0f172a;
     font-family: 'Inter', sans-serif;
   }
 }
 
-/* Custom sleek scrollbar */
+/* Custom sleek light scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #121212;
+  background: #f1f5f9;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2a2a2a;
+  background: #cbd5e1;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #45db7d;
+  background: #3b82f6;
 }
 
 /* Road surface dash styling */
 .road-divider {
-  background-image: linear-gradient(to right, #444 60%, transparent 40%);
+  background-image: linear-gradient(to right, #666 60%, transparent 40%);
   background-size: 60px 2px;
   background-repeat: repeat-x;
 }
 
 /* Tarmac asphalt texture */
 .asphalt-texture {
-  background-color: #181818;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-color: #1e1e1e;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
   background-size: 8px 8px;
 }
 
-/* Neon text illumination effect */
-.letter-glow {
-  text-shadow: 0 0 20px rgba(69, 219, 125, 0.8), 0 0 40px rgba(69, 219, 125, 0.4);
+/* Neon blue text illumination effect */
+.letter-glow-blue {
+  text-shadow: 0 0 25px rgba(59, 130, 246, 0.9), 0 0 50px rgba(37, 99, 235, 0.5);
 }
 
 /* GPU acceleration helper */

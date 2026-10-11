@@ -77,9 +77,7 @@ export default function HeroSection({ isAudioEnabled, onScrollProgressChange }) 
       console.warn('Web Audio not supported or blocked:', e)
     }
 
-    return () => {
-      // Keep context alive or suspend
-    }
+    return () => {}
   }, [isAudioEnabled])
 
   useEffect(() => {
@@ -89,12 +87,10 @@ export default function HeroSection({ isAudioEnabled, onScrollProgressChange }) 
       const letters = lettersRef.current.filter(Boolean)
       const road = roadRef.current
       const container = containerRef.current
-      const track = trackRef.current
 
       if (!car || !road || !container) return
 
       // --- INITIAL LOAD ANIMATION (Requirement 2) ---
-      // Fade in & staggered reveal of headline letters and badge
       const introTl = gsap.timeline({ defaults: { ease: 'power3.out' } })
 
       // Headline intro
@@ -106,7 +102,7 @@ export default function HeroSection({ isAudioEnabled, onScrollProgressChange }) 
           scale: 0.85,
         },
         {
-          opacity: 0.18, // Subtle base visibility above the fold
+          opacity: 0.22, // Subtle base visibility above the fold
           y: 0,
           scale: 1,
           duration: 0.8,
@@ -121,13 +117,13 @@ export default function HeroSection({ isAudioEnabled, onScrollProgressChange }) 
         {
           x: -120,
           opacity: 0,
-          filter: 'drop-shadow(0 0 0px rgba(69,219,125,0))',
+          filter: 'drop-shadow(0 0 0px rgba(37,99,235,0))',
         },
         {
           x: 0,
           opacity: 1,
           duration: 1.2,
-          filter: 'drop-shadow(0 0 25px rgba(69,219,125,0.4))',
+          filter: 'drop-shadow(0 0 25px rgba(37,99,235,0.4))',
           ease: 'power2.out',
         },
         '-=0.6'
@@ -142,7 +138,7 @@ export default function HeroSection({ isAudioEnabled, onScrollProgressChange }) 
           y: 20,
         },
         {
-          opacity: 0, // Controlled by scroll trigger
+          opacity: 0,
           scale: 1,
           y: 0,
           duration: 0.5,
@@ -151,14 +147,12 @@ export default function HeroSection({ isAudioEnabled, onScrollProgressChange }) 
       )
 
       // --- SCROLL-DRIVEN ANIMATION (Requirement 3 & 4) ---
-      // Measure dimensions accurately
       const updateDimensionsAndAnimation = () => {
         const roadRect = road.getBoundingClientRect()
         const carRect = car.getBoundingClientRect()
         const carWidth = carRect.width || 180
         const endX = roadRect.width - carWidth
 
-        // Cache letter offsets relative to road left
         const letterData = letters.map((el) => {
           const rect = el.getBoundingClientRect()
           return {
@@ -167,17 +161,15 @@ export default function HeroSection({ isAudioEnabled, onScrollProgressChange }) 
           }
         })
 
-        // Velocity tracking variables
         let lastScrollY = window.scrollY
         let lastTime = performance.now()
         let currentVelocity = 0
 
-        // Main Car Travel ScrollTrigger
-        const mainScrollTrigger = ScrollTrigger.create({
+        ScrollTrigger.create({
           trigger: container,
           start: 'top top',
           end: 'bottom bottom',
-          scrub: 0.8, // Buttery smooth interpolation
+          scrub: 0.8,
           onUpdate: (self) => {
             const progress = self.progress
             const currentX = progress * endX
@@ -191,11 +183,11 @@ export default function HeroSection({ isAudioEnabled, onScrollProgressChange }) 
             // Move car along road
             gsap.set(car, { x: currentX })
 
-            // Expand neon trail behind car
+            // Expand neon blue trail behind car
             const trailWidth = currentX + carWidth * 0.45
             gsap.set(trail, { width: Math.max(0, trailWidth) })
 
-            // Dynamic Car Drift Tilt based on direction and speed
+            // Velocity tracking
             const now = performance.now()
             const dt = (now - lastTime) / 1000
             const dy = window.scrollY - lastScrollY
@@ -207,15 +199,13 @@ export default function HeroSection({ isAudioEnabled, onScrollProgressChange }) 
               currentVelocity = currentVelocity * 0.8 + rawVelocity * 0.2
             }
 
-            // Compute speed in km/h (capped at 295 km/h for McLaren 720S)
             const computedSpeed = Math.min(295, currentVelocity * 0.12)
             setSpeed(computedSpeed)
 
-            // Dynamic gear shifting
             const currentGear = Math.min(7, Math.max(1, Math.floor(computedSpeed / 40) + 1))
             setGear(currentGear)
 
-            // Dynamic engine audio modulation
+            // Audio modulation
             if (gainRef.current && oscRef.current && isAudioEnabled) {
               const targetGain = Math.min(0.15, computedSpeed / 2000)
               const targetFreq = 70 + (computedSpeed * 1.5)
@@ -226,23 +216,21 @@ export default function HeroSection({ isAudioEnabled, onScrollProgressChange }) 
               }
             }
 
-            // Tilt car slightly during motion
+            // Car tilt
             const tiltAngle = Math.min(3, Math.max(-3, (dy / 30)))
             gsap.set(car, { rotation: tiltAngle })
 
-            // Reveal headline letters when car reaches each letter
+            // Reveal headline letters with blue neon glow
             const currentCarGlobalX = road.getBoundingClientRect().left + currentX + carWidth * 0.55
 
             letterData.forEach(({ el, center }) => {
               if (currentCarGlobalX >= center) {
-                // Activated state: Bright neon glow & crisp white
                 el.style.opacity = '1'
                 el.style.color = '#ffffff'
-                el.style.textShadow = '0 0 25px rgba(69, 219, 125, 0.9), 0 0 50px rgba(69, 219, 125, 0.5)'
+                el.style.textShadow = '0 0 25px rgba(59, 130, 246, 0.95), 0 0 50px rgba(37, 99, 235, 0.6)'
                 el.style.transform = 'translateY(-2px) scale(1.05)'
               } else {
-                // Dim unpassed state
-                el.style.opacity = '0.18'
+                el.style.opacity = '0.22'
                 el.style.color = '#71717a'
                 el.style.textShadow = 'none'
                 el.style.transform = 'translateY(0) scale(1)'
@@ -251,8 +239,7 @@ export default function HeroSection({ isAudioEnabled, onScrollProgressChange }) 
           },
         })
 
-        // --- STAGGERED METRIC CARDS (Requirement 2 & 3) ---
-        // Box 1: 58% Increase in pick up point use (Volt Lime)
+        // Staggered metric cards
         gsap.fromTo(
           '#box1',
           { opacity: 0, y: 50, scale: 0.85 },
@@ -269,7 +256,6 @@ export default function HeroSection({ isAudioEnabled, onScrollProgressChange }) 
           }
         )
 
-        // Box 2: 23% Decreased in customer phone calls (Electric Cyan)
         gsap.fromTo(
           '#box2',
           { opacity: 0, y: -50, scale: 0.85 },
@@ -286,7 +272,6 @@ export default function HeroSection({ isAudioEnabled, onScrollProgressChange }) 
           }
         )
 
-        // Box 3: 27% Surge in delivery velocity (Carbon Dark)
         gsap.fromTo(
           '#box3',
           { opacity: 0, y: 50, scale: 0.85 },
@@ -303,7 +288,6 @@ export default function HeroSection({ isAudioEnabled, onScrollProgressChange }) 
           }
         )
 
-        // Box 4: 40% Decreased customer support inquiries (Flame Orange)
         gsap.fromTo(
           '#box4',
           { opacity: 0, y: -50, scale: 0.85 },
@@ -321,7 +305,6 @@ export default function HeroSection({ isAudioEnabled, onScrollProgressChange }) 
         )
       }
 
-      // Initial measurement after fonts load
       document.fonts.ready.then(() => {
         updateDimensionsAndAnimation()
       })
@@ -351,62 +334,60 @@ export default function HeroSection({ isAudioEnabled, onScrollProgressChange }) 
   return (
     <div
       ref={containerRef}
-      className="relative w-full bg-[#121212] select-none"
-      style={{ height: '280vh' }} // Ample runway for smooth scroll scrub
+      className="relative w-full bg-[#d1d1d1] select-none transition-colors"
+      style={{ height: '280vh' }}
     >
-      {/* Sticky Pinned Stage (Always 100vh) */}
+      {/* Sticky Pinned Stage */}
       <div
         ref={trackRef}
-        className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-between py-6 md:py-8"
+        className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-between py-6 md:py-8 bg-[#d1d1d1]"
       >
-        {/* Background Grid & Atmospheric Lighting */}
-        <div className="absolute inset-0 bg-radial-vignette pointer-events-none opacity-60" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[300px] bg-[#45db7d]/5 rounded-full blur-[140px] pointer-events-none" />
+        {/* Subtle Atmospheric Lighting */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[300px] bg-blue-500/10 rounded-full blur-[140px] pointer-events-none" />
 
-        {/* Top Header / Context Area */}
+        {/* Top Header Context Area */}
         <div className="relative z-20 pt-16 md:pt-14 px-6 max-w-7xl mx-auto w-full flex flex-col items-center text-center">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-[#def54f] mb-3 backdrop-blur-md">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/80 border border-gray-300 text-xs font-mono text-blue-600 mb-3 backdrop-blur-md shadow-sm">
             <Sparkles className="w-3.5 h-3.5" />
             <span>SCROLL-DRIVEN DYNAMICS</span>
-            <span className="text-white/40">//</span>
-            <span className="text-zinc-400">GSAP SCROLLTRIGGER</span>
+            <span className="text-gray-400">//</span>
+            <span className="text-gray-600">GSAP SCROLLTRIGGER</span>
           </div>
-          <h2 className="text-xs sm:text-sm font-mono tracking-widest text-zinc-400 uppercase">
+          <h2 className="text-xs sm:text-sm font-mono tracking-widest text-gray-700 font-semibold uppercase">
             AERODYNAMIC TELEMETRY &bull; McLAREN 720S
           </h2>
         </div>
 
         {/* --- MAIN HIGHWAY TRACK (Centerfold) --- */}
         <div className="relative w-full my-auto z-20 flex items-center justify-center">
-          {/* Outer Roadbed Container */}
           <div
             ref={roadRef}
             id="road"
-            className="relative w-full h-[180px] sm:h-[220px] md:h-[240px] bg-[#1c1c1c] border-y border-white/10 shadow-2xl overflow-hidden flex items-center"
+            className="relative w-full h-[180px] sm:h-[220px] md:h-[240px] bg-[#1c1c1c] border-y-2 border-gray-400 shadow-2xl overflow-hidden flex items-center"
           >
             {/* Asphalt Texture */}
-            <div className="absolute inset-0 asphalt-texture opacity-70 pointer-events-none" />
+            <div className="absolute inset-0 asphalt-texture opacity-80 pointer-events-none" />
 
             {/* Road Lane Center Divider Lines */}
             <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-0.5 road-divider pointer-events-none opacity-40" />
 
-            {/* Tarmac Curb Edges (Top & Bottom kerbs) */}
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-red-500 via-white to-red-500 bg-[length:40px_100%] opacity-30" />
-            <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-red-500 via-white to-red-500 bg-[length:40px_100%] opacity-30" />
+            {/* Tarmac Curb Edges */}
+            <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-red-600 via-white to-red-600 bg-[length:40px_100%] opacity-80" />
+            <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-red-600 via-white to-red-600 bg-[length:40px_100%] opacity-80" />
 
-            {/* Glowing Emerald Trail behind Car */}
+            {/* Glowing Blue Trail behind Car */}
             <div
               ref={trailRef}
               id="trail"
-              className="absolute left-0 top-0 bottom-0 bg-gradient-to-r from-[#45db7d]/10 via-[#45db7d]/50 to-[#45db7d] z-10 pointer-events-none transition-none shadow-glow-green"
+              className="absolute left-0 top-0 bottom-0 bg-gradient-to-r from-blue-600/20 via-blue-500/60 to-blue-500 z-10 pointer-events-none transition-none"
               style={{
                 width: 0,
                 borderRight: '3px solid #ffffff',
-                boxShadow: '0 0 35px #45db7d, inset 0 0 20px #45db7d',
+                boxShadow: '0 0 35px #2563eb, inset 0 0 20px #3b82f6',
               }}
             />
 
-            {/* Letter-Spaced Grand Headline: "W E L C O M E   I T Z F I Z Z" */}
+            {/* Letter-Spaced Grand Headline */}
             <div
               ref={headlineContainerRef}
               className="relative z-20 w-full px-4 sm:px-8 md:px-12 flex items-center justify-center pointer-events-none"
@@ -430,7 +411,7 @@ export default function HeroSection({ isAudioEnabled, onScrollProgressChange }) 
                       className="value-letter inline-block transition-transform duration-150 font-black will-change-transform"
                       style={{
                         color: '#71717a',
-                        opacity: 0, // Animates on initial load + scroll
+                        opacity: 0,
                       }}
                     >
                       {char}
@@ -462,7 +443,7 @@ export default function HeroSection({ isAudioEnabled, onScrollProgressChange }) 
         </div>
 
         {/* --- 4 FLOATING IMPACT METRIC CARDS --- */}
-        {/* Metric 1: 58% (Volt Lime) - Top Left/Center */}
+        {/* Metric 1: 58% (Volt Lime) */}
         <MetricCard
           id="box1"
           cardRef={box1Ref}
@@ -478,7 +459,7 @@ export default function HeroSection({ isAudioEnabled, onScrollProgressChange }) 
           isPositive={true}
         />
 
-        {/* Metric 2: 23% (Electric Cyan) - Bottom Left/Center */}
+        {/* Metric 2: 23% (Electric Cyan) */}
         <MetricCard
           id="box2"
           cardRef={box2Ref}
@@ -494,7 +475,7 @@ export default function HeroSection({ isAudioEnabled, onScrollProgressChange }) 
           isPositive={false}
         />
 
-        {/* Metric 3: 27% (Slate Carbon) - Top Right */}
+        {/* Metric 3: 27% (Clean White) */}
         <MetricCard
           id="box3"
           cardRef={box3Ref}
@@ -502,15 +483,15 @@ export default function HeroSection({ isAudioEnabled, onScrollProgressChange }) 
           unit="%"
           title="Surge in fulfillment throughput"
           subtext="Express lane validation"
-          bgColor="#242424"
-          textColor="#fff"
-          accentColor="#ffffff"
+          bgColor="#ffffff"
+          textColor="#111"
+          accentColor="#3b82f6"
           icon={Zap}
           positionClasses="top-16 sm:top-20 md:top-24 right-4 sm:right-8 md:right-[10%] max-w-[260px]"
           isPositive={true}
         />
 
-        {/* Metric 4: 40% (Flame Orange) - Bottom Right */}
+        {/* Metric 4: 40% (Flame Orange) */}
         <MetricCard
           id="box4"
           cardRef={box4Ref}
@@ -535,9 +516,9 @@ export default function HeroSection({ isAudioEnabled, onScrollProgressChange }) 
 
         {/* Scroll cue hint on initial load */}
         {scrollPct < 5 && (
-          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-[11px] font-mono text-zinc-500 animate-bounce pointer-events-none">
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-[11px] font-mono text-gray-600 font-semibold animate-bounce pointer-events-none">
             <span>SCROLL DOWN TO DRIVE</span>
-            <ChevronDown className="w-4 h-4 text-[#45db7d]" />
+            <ChevronDown className="w-4 h-4 text-blue-600" />
           </div>
         )}
       </div>
