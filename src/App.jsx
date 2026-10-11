@@ -1,40 +1,26 @@
-import React, { useState } from 'react'
-import Navbar from './components/Navbar'
+import React from 'react'
 import HeroSection from './components/HeroSection'
-import FeatureShowcase from './components/FeatureShowcase'
-import Footer from './components/Footer'
 
 export default function App() {
-  const [isAudioEnabled, setIsAudioEnabled] = useState(false)
-  const [scrollProgress, setScrollProgress] = useState(0)
-
-  const toggleAudio = () => {
-    setIsAudioEnabled((prev) => !prev)
-  }
-
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-gray-900 flex flex-col font-sans selection:bg-blue-600 selection:text-white">
-      {/* Top Floating Navbar */}
-      <Navbar
-        isAudioEnabled={isAudioEnabled}
-        toggleAudio={toggleAudio}
-        scrollProgress={scrollProgress}
-      />
+    <div className="w-full bg-[#d1d1d1] text-[#111] font-sans overflow-x-hidden">
+      {/* Top Left Heading in Cyan Box */}
+      <div className="fixed top-4 left-4 z-50 text-base sm:text-lg font-bold tracking-tight text-[#111] select-none bg-[#6ac9ff] px-4 py-2 rounded-xl border border-black/15 shadow-md">
+        Itzfizz Digital Assignment
+      </div>
 
-      {/* Main Content Area */}
-      <main className="flex-1">
-        {/* Core Scroll-Driven Hero Section (Pinned Above-The-Fold & Scrolled) */}
-        <HeroSection
-          isAudioEnabled={isAudioEnabled}
-          onScrollProgressChange={setScrollProgress}
-        />
+      {/* Top Right GitHub Link */}
+      <a
+        href="https://github.com/Kanikashri19/car-scroll-animation"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed top-4 right-4 z-50 text-xs font-medium text-gray-700 hover:text-black bg-white/80 hover:bg-white px-3 py-1.5 rounded-md shadow-sm border border-gray-300 transition-colors"
+      >
+        GitHub Repository
+      </a>
 
-        {/* Feature Highlights Section */}
-        <FeatureShowcase />
-      </main>
-
-      {/* Footer */}
-      <Footer />
+      {/* Hero Section Animation */}
+      <HeroSection />
     </div>
   )
 }
