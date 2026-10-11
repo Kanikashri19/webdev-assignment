@@ -6,7 +6,7 @@ A cinematic, high-performance scroll-driven hero section animation inspired by t
 
 ## 🔗 Links
 
-- **Live Demo:** [https://Kanikashri19.github.io/car-scroll-animation/](https://Kanikashri19.github.io/car-scroll-animation/)
+- **Live Demo:**
 - **GitHub Repository:** [https://github.com/Kanikashri19/car-scroll-animation](https://github.com/Kanikashri19/car-scroll-animation)
 - **Original Inspiration:** [https://paraschaturvedi.github.io/car-scroll-animation](https://paraschaturvedi.github.io/car-scroll-animation)
 
